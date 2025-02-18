@@ -6,11 +6,24 @@ use Illuminate\Http\Request;
 
 class AnnonceController extends Controller
 {
+
+ //array of static data
+  
+   private static function getdata(){}
+
+
+
+
+
+
+
+
+
+
     /**
      * Display a listing of the resource.
      */
-    public function dashbordAnnonce()
-    {
+    public function dashbordAnnonce(){
         return view('annonce.dashbordAnnonce');
     }
 
