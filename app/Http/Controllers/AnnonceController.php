@@ -23,7 +23,7 @@ class AnnonceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function dashbordAnnonce(){
+    public function index(){
         return view('annonce.dashbordAnnonce');
     }
 
