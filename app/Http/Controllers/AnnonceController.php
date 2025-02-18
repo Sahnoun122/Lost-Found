@@ -9,9 +9,9 @@ class AnnonceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function dashbordAnnonce()
     {
-        //
+        return view('annonce.dashbordAnnonce');
     }
 
     /**

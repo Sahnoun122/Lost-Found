@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaticController;
+use App\Http\Controllers\AnnonceController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -40,7 +41,11 @@ Route::get('/welcome', function () {
 
 // });
 
+
+
 Route::get('/' , [StaticController::class , 'index']);
+Route::get('annonce/dashbordAnnonce' , [AnnonceController::class , 'dashbordAnnonce']);
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
