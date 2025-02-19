@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Annonce;
 use Illuminate\Http\Request;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class AnnonceController extends Controller
 {
@@ -13,36 +15,43 @@ class AnnonceController extends Controller
 
 
 
-
-
-
-
-
-
-
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(){
-        return view('annonce.dashbordAnnonce');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
+       /**
+        * Display a listing of the resource.
+        */
+       public function index()
+       {
+        $annonce= Annonce::all();
+        return view('annonce.index' , compact('annonce'));
+       }
+   
+       /**
+        * Show the form for creating a new resource.
+        */
+       public function create()
+       {
+           return view('annonce.create');
+       }
+   
+       /**
+        * Store a newly created resource in storage.
+        */
+       public function store(Request $request)
+       {
+           $validatedData = $request->validate([
+               'titre' => 'required',
+               'email' => 'required',
+               'description' => 'required',
+               'photos' => 'required',
+               'date' => 'required',
+               'lieu' => 'required',
+               'phone' => 'required'
+           ]);
+   
+           $annonce = Annonce::create($validatedData);
+           return redirect('/annonce')->with('success', 'Ajouté avec succès');
+       }
+   
+   
     /**
      * Display the specified resource.
      */
@@ -74,4 +83,5 @@ class AnnonceController extends Controller
     {
         //
     }
+
 }
