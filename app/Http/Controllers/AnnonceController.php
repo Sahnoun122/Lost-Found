@@ -13,7 +13,18 @@ class AnnonceController extends Controller
   
    private static function getdata(){}
 
-
+//    public function search(Request $request)
+//    {
+//        $search = $request->input('search'); 
+//        $annonce = Annonce::where(function($query) use ($search) {
+//            $query->where('titre', 'like', "%$search%")
+//                  ->orWhere('lieu', 'like', "%$search%");
+//                 //  ->orWhere('categorie', 'like', "%$search%"); 
+//        })->get();
+   
+//        return view('annonce.search', compact('annonce', 'search')); 
+       
+//    }
 
        /**
         * Display a listing of the resource.

@@ -45,6 +45,7 @@ Route::get('/welcome', function () {
 
 Route::get('/dashbordAnnonce' , [StaticController::class , 'index']);
 // Route::get('annonce/dashbordAnnonce' , [AnnonceController::class , 'dashbordAnnonce']);
+Route::get('/search' , [AnnonceController::class , 'search']);
 
 Route::resource('annonce', AnnonceController::class);
 
