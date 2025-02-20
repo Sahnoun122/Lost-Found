@@ -9,38 +9,60 @@ use Symfony\Contracts\Service\Attribute\Required;
 
 class AnnonceController extends Controller
 {
-
  //array of static data
 
+ public function index(request $request)
+ {
+     $annonce = Annonce::query();
+
+     if ($request->has('search')) {
+
+         $annonce->where(function ($q) use ($request) {
+             $q->where('titre', 'like', '%' . $request->search . '%')
+                 ->orwhere('description', 'like', '%' . $request->search . '%');
+
+         });
 
 
+     }
+ 
+     $countAnnonce = Annonce::count('id');
+     $views = Annonce::orderBy('titre', 'desc')
+         ->take(5)
+         ->get();
+
+     $annonce = $annonce->paginate(6)->appends($request->except('page'));
+     return view('annonce.index', compact('annonce', 'countAnnonce'));
+    // return redirect()->back();
+
+ }
  
   
    private static function getdata(){}
 
-   public function search(Request $request)
-   {
-       $search = $request->input('search'); 
-       $annonce = Annonce::where(function($query) use ($search) {
-           $query->where('titre', 'like', "%$search%")
-                 ->orWhere('lieu', 'like', "%$search%");
-                //  ->orWhere('categorie', 'like', "%$search%"); 
-       })->get();
+//    public function search(Request $request)
+//    {
+//        $search = $request->input('search'); 
+//        $annonce = Annonce::where(function($query) use ($search) {
+//            $query->where('titre', 'like', "%$search%")
+//                  ->orWhere('lieu', 'like', "%$search%");
+//                 //  ->orWhere('categorie', 'like', "%$search%"); 
+//        })->get();
    
-    //    return redirect()->back();
-      return view('annonce.index', compact('annonce'));
+//     //    return redirect()->back();
+//       return view('annonce.index', compact('annonce'));
        
-   }
+//    }
 
-       /**
-        * Display a listing of the resource.
-        */
-       public function index()
-       {
-        $annonce= Annonce::all();
-        $categories = Categories::all();
-        return view('annonce.index', ['annonce' => $annonce,'categories' => $categories]);
-       }
+//        /**
+//         * Display a listing of the resource.
+//         */
+//        public function index()
+//        {
+//         $annonce= Annonce::all();
+//         $categories = Categories::all();
+//         return view('annonce.index', ['annonce' => $annonce,'categories' => $categories]);
+//        }
    
        /**
         * Show the form for creating a new resource.

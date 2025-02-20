@@ -48,11 +48,11 @@ Route::get('/welcome', function () {
 
 
 
-Route::get('/dashbordAnnonce' , [StaticController::class , 'index']);
+// Route::get('/dashbordAnnonce' , [StaticController::class , 'index']);
 // Route::get('annonce/dashbordAnnonce' , [AnnonceController::class , 'dashbordAnnonce']);
-Route::POST('/search' , [AnnonceController::class , 'search'])->name('annonce.search');
+Route::POST('annonce.index' , [AnnonceController::class , 'index']);
 
-// Route::get('/annonce', [CategorieController::class, 'index']);
+Route::get('/annonce', [CategorieController::class, 'index']);
 
 Route::resource('annonce', AnnonceController::class);
 
