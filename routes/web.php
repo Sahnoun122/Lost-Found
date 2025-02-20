@@ -4,6 +4,11 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaticController;
 use App\Http\Controllers\AnnonceController;
+use App\Http\Controllers\CategorieController;
+use Illuminate\Container\Attributes\Auth;
+
+$_SESSION['user_id'] = 1;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -45,7 +50,9 @@ Route::get('/welcome', function () {
 
 Route::get('/dashbordAnnonce' , [StaticController::class , 'index']);
 // Route::get('annonce/dashbordAnnonce' , [AnnonceController::class , 'dashbordAnnonce']);
-Route::get('/search' , [AnnonceController::class , 'search']);
+Route::POST('/search' , [AnnonceController::class , 'search'])->name('annonce.search');
+
+// Route::get('/annonce', [CategorieController::class, 'index']);
 
 Route::resource('annonce', AnnonceController::class);
 

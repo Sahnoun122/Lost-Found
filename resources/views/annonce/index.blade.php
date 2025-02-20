@@ -40,7 +40,7 @@
     <main class="lg:ml-64 p-8">
         <!-- Header -->
         <header class="bg-white shadow rounded-lg p-4 mb-6">
-            <form class="max-w-md mx-auto" action="{{ route('annonce.search') }}" method="GET">   
+            <form class="max-w-md mx-auto" action="{{ route('annonce.search') }}" method="POST">   
                 <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -55,13 +55,17 @@
 
 
             <div>
+                @php
+                    echo $_SESSION['user_id'];    
+                @endphp
                 @foreach ($annonce as $annon)
                 <div class="grid grid-cols-2 max-w-sm bg-white border border-gray-200  rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
                     <a href="#">
-                        <img class="rounded-t-lg" src="{{ asset('storage/photos/' . $annon->photos) }}" alt="" />
+                        <img class="rounded-t-lg" src="{{  ($annon->photos) }}" alt="" />
                     </a>
                     <div class="p-5">
                         <a href="#">
+
                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $annon->titre }}</h5>
                         </a>
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $annon->description }}</p>
@@ -69,6 +73,8 @@
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $annon->lieu }}</p>
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $annon->email }}</p>
                         <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $annon->phone }}</p>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $annon->nom }}</p>
+
                         <a href="{{ route('annonce.edit', $annon->id) }}" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Modifier</a>
             
                         <form action="{{ route('annonce.destroy', $annon->id) }}" method="post">
@@ -89,7 +95,7 @@
 
 
         </div>
-
+{{-- 
 
 <button data-modal-target="crud-modal"  onclick="btn()"  data-modal-toggle="crud-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mb-5 ml-5" type="button">
     Demande
@@ -180,7 +186,7 @@
                 <h3 class="text-lg font-semibold mb-4">Types de transactions</h3>
                 <canvas id="transactionTypes" class="w-full h-64"></canvas>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Recent Users Table -->
         <div class="bg-white rounded-lg shadow">

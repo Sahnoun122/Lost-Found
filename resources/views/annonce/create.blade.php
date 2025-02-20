@@ -2,14 +2,14 @@
 @section('main')
 
 <div class="row">
-   @if($errors->any())
+   {{-- @if($errors->any())
    <div class="alert alert-danger">
     <ul>
         @foreach($errors->any() as $error )
              <li>{{ $error }}</li>
         @endforeach
     @endif
-    </ul>
+    </ul> --}}
 
    </div>
 <form class="p-4 md:p-5" method="POST" action="{{ route('annonce.store') }}">
@@ -54,8 +54,23 @@
             <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Téléphone</label>
             <input type="phone" name="phone" id="phone" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Entrez le numéro de téléphone" >
         </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Soumettre</button>
+
+        
+        <form class="max-w-sm mx-auto" method="POST" action="{{ route('annonce.index') }}">
+            @csrf 
+            <label for="categories" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+            <select id="categories" name="id_categorie" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                @foreach ($categories as $categorie)
+                    <option value="{{ $categorie->id }}">{{ $categorie->nom }}</option>
+                @endforeach
+            </select>
+        
+        </form>
+
+        <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+            Submit
+        </button>
+  
 </form>
 </div>
 @endsection

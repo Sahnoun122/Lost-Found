@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Annonce;
+use App\Models\Categories;
 use Illuminate\Http\Request;
 use Symfony\Contracts\Service\Attribute\Required;
 
@@ -10,21 +11,26 @@ class AnnonceController extends Controller
 {
 
  //array of static data
+
+
+
+ 
   
    private static function getdata(){}
 
-//    public function search(Request $request)
-//    {
-//        $search = $request->input('search'); 
-//        $annonce = Annonce::where(function($query) use ($search) {
-//            $query->where('titre', 'like', "%$search%")
-//                  ->orWhere('lieu', 'like', "%$search%");
-//                 //  ->orWhere('categorie', 'like', "%$search%"); 
-//        })->get();
+   public function search(Request $request)
+   {
+       $search = $request->input('search'); 
+       $annonce = Annonce::where(function($query) use ($search) {
+           $query->where('titre', 'like', "%$search%")
+                 ->orWhere('lieu', 'like', "%$search%");
+                //  ->orWhere('categorie', 'like', "%$search%"); 
+       })->get();
    
-//        return view('annonce.search', compact('annonce', 'search')); 
+    //    return redirect()->back();
+      return view('annonce.index', compact('annonce'));
        
-//    }
+   }
 
        /**
         * Display a listing of the resource.
@@ -32,7 +38,8 @@ class AnnonceController extends Controller
        public function index()
        {
         $annonce= Annonce::all();
-        return view('annonce.index' , compact('annonce'));
+        $categories = Categories::all();
+        return view('annonce.index', ['annonce' => $annonce,'categories' => $categories]);
        }
    
        /**
@@ -40,7 +47,9 @@ class AnnonceController extends Controller
         */
        public function create()
        {
-           return view('annonce.create');
+            $categories = Categories::all();
+
+            return view('annonce.create', ['categories' => $categories]);
        }
    
        /**
@@ -50,14 +59,18 @@ class AnnonceController extends Controller
        {
            $validatedData = $request->validate([
                'titre' => 'required',
-               'email' => 'required',
                'description' => 'required',
                'photos' => 'required',
-               'date' => 'required',
                'lieu' => 'required',
-               'phone' => 'required'
+               'date' => 'required',
+               'email' => 'required',
+               'phone' => 'required',
+               'id_categorie' => 'required'
+
+
            ]);
-   
+         
+
            $annonce = Annonce::create($validatedData);
            return redirect('/annonce')->with('success', 'Ajouté avec succès');
        }
@@ -68,6 +81,7 @@ class AnnonceController extends Controller
      */
     public function show(string $id)
     {
+        
         $annonce= Annonce::all();
         return view('annonce.index' , compact('annonce'));
     }

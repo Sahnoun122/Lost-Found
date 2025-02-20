@@ -21,7 +21,9 @@ return new class extends Migration
         $table->date('date');
         $table->string('email');
         $table->string('phone');
-         $table->timestamps();
+        $table->unsignedInteger('id_categorie');
+        $table->foreign('id_categorie')->references('id')->on('categories')->onUpdate('cascade');
+        $table->timestamps();
     });
 }
     /**
