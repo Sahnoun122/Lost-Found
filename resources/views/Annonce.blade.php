@@ -22,7 +22,7 @@
     <!-- Sidebar avec classe pour mobile -->
     <aside id="sidebar" class="fixed left-0 top-0 h-screen w-64 bg-gray-800 text-white transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out z-40">
         <div class="p-4">
-            <h2 class="text-2xl font-bold mb-6">EasyMatch Admin</h2>
+            <h2 class="text-2xl font-bold mb-6">lost found</h2>
             <nav>
                 <a href="#" class="block py-2 px-4 bg-gray-700 rounded mb-2">Tableau de bord</a>
                 <a href="#" class="block py-2 px-4 hover:bg-gray-700 rounded mb-2">Utilisateurs</a>
