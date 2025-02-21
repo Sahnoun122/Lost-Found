@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('commentaires', function (Blueprint $table) {
             $table->id();
+            $table->string('comment');
+            $table->unsignedBigInteger('id_annonce');
+            $table->foreign('id_annonce')->references('id')->on('annonces')->onUpdate('cascade');
             $table->timestamps();
         });
     }
