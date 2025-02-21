@@ -2,63 +2,66 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commentaire;
+use App\Models\Annonce;
 use Illuminate\Http\Request;
 
 class ComentaireController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+
+        $comments = Commentaire::all();
+        return view('annonce.show', ['comments' => $comments]);
+
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('annonce.show');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'comment' => 'required',
+            'id_annonce' => 'required|exists:annonces,id'
+        ]);
+
+        $comment = Commentaire::create($validatedData);
+        return redirect()->back()->with('success', 'Commentaire ajouté avec succès');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        //
+        $annonce = Annonce::findOrFail($id);
+    
+        $comments = Commentaire::where('id_annonce', $id)->get();
+    
+        // Passer les données à la vue
+        return view('annonce.show', [
+            'annonce' => $annonce,
+            'comments' => $comments,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
+    
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $comment = Commentaire::findOrFail($id);
+        $comment->delete();
+        return redirect()->back()->with('success', 'Commentaire supprimé avec succès');
     }
 }

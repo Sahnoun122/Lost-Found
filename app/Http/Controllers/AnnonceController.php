@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Annonce;
 use App\Models\Categories;
+use App\Models\Commentaire;
+
 use Illuminate\Http\Request;
 use Symfony\Contracts\Service\Attribute\Required;
 
 class AnnonceController extends Controller
 {
- //array of static data
+//  array of static data
 
  public function index(request $request)
  {
@@ -22,8 +24,6 @@ class AnnonceController extends Controller
                  ->orwhere('description', 'like', '%' . $request->search . '%');
 
          });
-
-
      }
  
      $countAnnonce = Annonce::count('id');
@@ -34,39 +34,10 @@ class AnnonceController extends Controller
      $annonce = $annonce->paginate(6)->appends($request->except('page'));
      return view('annonce.index', compact('annonce', 'countAnnonce'));
     // return redirect()->back();
-
  }
  
-  
    private static function getdata(){}
 
-//    public function search(Request $request)
-//    {
-//        $search = $request->input('search'); 
-//        $annonce = Annonce::where(function($query) use ($search) {
-//            $query->where('titre', 'like', "%$search%")
-//                  ->orWhere('lieu', 'like', "%$search%");
-//                 //  ->orWhere('categorie', 'like', "%$search%"); 
-//        })->get();
-   
-//     //    return redirect()->back();
-//       return view('annonce.index', compact('annonce'));
-       
-//    }
-
-//        /**
-//         * Display a listing of the resource.
-//         */
-//        public function index()
-//        {
-//         $annonce= Annonce::all();
-//         $categories = Categories::all();
-//         return view('annonce.index', ['annonce' => $annonce,'categories' => $categories]);
-//        }
-   
-       /**
-        * Show the form for creating a new resource.
-        */
        public function create()
        {
             $categories = Categories::all();
@@ -74,9 +45,6 @@ class AnnonceController extends Controller
             return view('annonce.create', ['categories' => $categories]);
        }
    
-       /**
-        * Store a newly created resource in storage.
-        */
        public function store(Request $request)
        {
            $validatedData = $request->validate([
@@ -88,8 +56,6 @@ class AnnonceController extends Controller
                'email' => 'required',
                'phone' => 'required',
                'id_categorie' => 'required'
-
-
            ]);
          
 
@@ -97,20 +63,20 @@ class AnnonceController extends Controller
            return redirect('/annonce')->with('success', 'Ajouté avec succès');
        }
    
-   
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
-    {
-        
-        $annonce= Annonce::all();
-        return view('annonce.index' , compact('annonce'));
+    { 
+         
+        $annonce = Annonce::findOrFail($id);
+ 
+        $comments = Commentaire::where('id_annonce', $id)->get();
+    
+        return view('annonce.show', [
+            'annonce' => $annonce,
+            'comments' => $comments,
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(string $id)
     {
         $annonce = Annonce::findOrFail($id);
@@ -139,9 +105,14 @@ class AnnonceController extends Controller
         Annonce::whereId($id)->update($validatedData);
         return redirect()->route('annonce.index')->with('success', 'Annonce mise à jour avec succès');
     }
+
+
+
     /**
      * Remove the specified resource from storage.
      */
+
+
     public function destroy(string $id)
     {
         $annonce = Annonce::findOrFail($id);

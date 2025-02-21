@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaticController;
 use App\Http\Controllers\AnnonceController;
+use App\Http\Controllers\ComentaireController;
 use App\Http\Controllers\CategorieController;
 use Illuminate\Container\Attributes\Auth;
 
@@ -50,7 +51,18 @@ Route::get('/welcome', function () {
 
 // Route::get('/dashbordAnnonce' , [StaticController::class , 'index']);
 // Route::get('annonce/dashbordAnnonce' , [AnnonceController::class , 'dashbordAnnonce']);
+
 Route::POST('annonce.index' , [AnnonceController::class , 'index']);
+Route::POST('annonce.show' , [AnnonceController::class , 'index']);
+Route::POST('annonce.details' , [AnnonceController::class , 'index']);
+Route::POST('comments/store' , [ComentaireController::class , 'store']);
+
+
+
+Route::get('/annonce', [CategorieController::class, 'index']);
+
+Route::resource('annonce', AnnonceController::class);
+// Route::resource('annonce', ComentaireController::class);
 
 Route::get('/annonce', [CategorieController::class, 'index']);
 
